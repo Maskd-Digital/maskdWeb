@@ -1,0 +1,280 @@
+.footer {
+  position: relative;
+  z-index: 1;
+  width: 100%;
+  max-width: 100%;
+  min-height: 100svh;
+  min-height: 100dvh;
+  overflow-x: hidden;
+  isolation: isolate;
+  /* Figma horizontal base gradient — BELOW stripe texture */
+  background-color: #020a1a;
+  background-image: linear-gradient(
+    90deg,
+    #020919 0%,
+    #02091a 25%,
+    #020a1a 50%,
+    #020a1a 75%,
+    #020a1b 100%
+  );
+}
+
+/*
+  Same Figma Rectangle 17 cylinder tile as hero — ABOVE base, BELOW content.
+  Overlay modulates the dark navy into the ribbed wall.
+*/
+.footer__panels {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background-image: url("/images/hero-cylinder-tile.png");
+  background-repeat: repeat-x;
+  background-size: 105px 100%;
+  background-position: left top;
+  opacity: 0.55;
+  mix-blend-mode: overlay;
+}
+
+.footer__shell {
+  position: relative;
+  z-index: 1;
+  box-sizing: border-box;
+  min-height: 100svh;
+  min-height: 100dvh;
+  width: 100%;
+  max-width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-block:
+    clamp(2.5rem, 8vh, 5rem)
+    max(1.5rem, env(safe-area-inset-bottom));
+  padding-inline: max(var(--page-pad-x), env(safe-area-inset-left))
+    max(var(--page-pad-x), env(safe-area-inset-right));
+}
+
+.footer__content {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  max-width: var(--container-max);
+  margin-inline: auto;
+  min-width: 0;
+}
+
+.footer__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(2.5rem, 5vw, 4rem);
+  align-items: start;
+  width: 100%;
+  min-width: 0;
+}
+
+.footer__brand {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  min-width: 0;
+  max-width: 34rem;
+}
+
+.footer__logo {
+  width: clamp(88px, 14vw, 120px);
+  height: auto;
+  margin-bottom: 1.25rem;
+}
+
+.footer__tagline {
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  font-weight: 700;
+  font-style: italic;
+  line-height: 1.25;
+  color: var(--color-white);
+  max-width: 16ch;
+  margin-bottom: 1rem;
+  text-wrap: balance;
+}
+
+.footer__desc {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: 1.55;
+  color: rgba(210, 218, 235, 0.82);
+  max-width: 36ch;
+  margin-bottom: 2rem;
+  text-wrap: pretty;
+}
+
+.footer__links-label {
+  font-size: var(--fs-body);
+  font-weight: 700;
+  color: var(--color-white);
+  margin-bottom: 0.65rem;
+}
+
+.footer__links nav {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.55rem 0.75rem;
+}
+
+.footer__links a {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  color: rgba(255, 255, 255, 0.92);
+  white-space: nowrap;
+}
+
+.footer__links a:hover,
+.footer__links a:focus-visible {
+  color: var(--color-white);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.footer__links-sep {
+  color: rgba(255, 255, 255, 0.55);
+  font-weight: 300;
+  user-select: none;
+}
+
+.footer__form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.15rem;
+  width: 100%;
+  max-width: 420px;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  box-shadow: none;
+  padding: 0;
+}
+
+.footer__form-title {
+  font-size: clamp(1.35rem, 2.4vw, 2rem);
+  font-weight: 700;
+  line-height: 1.25;
+  color: var(--color-white);
+  margin-bottom: 0.35rem;
+}
+
+.footer__field {
+  display: flex;
+  flex-direction: column;
+  gap: 0.45rem;
+}
+
+.footer__label {
+  font-size: var(--fs-body);
+  font-weight: 600;
+  color: var(--color-white);
+}
+
+.footer__field input,
+.footer__field textarea {
+  width: 100%;
+  box-sizing: border-box;
+  background: #01040c;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+  padding: 0.85rem 1rem;
+  color: var(--color-white);
+  font-family: inherit;
+  font-size: 16px; /* ≥16px avoids iOS zoom */
+  font-weight: var(--fw-body);
+  outline: none;
+  transition:
+    border-color 200ms var(--ease-out),
+    box-shadow 200ms var(--ease-out);
+}
+
+.footer__field input {
+  min-height: 48px;
+}
+
+.footer__field textarea {
+  min-height: 140px;
+  resize: vertical;
+  line-height: 1.5;
+}
+
+.footer__field input::placeholder,
+.footer__field textarea::placeholder {
+  color: rgba(120, 140, 180, 0.5);
+}
+
+.footer__field input:focus,
+.footer__field textarea:focus {
+  border-color: rgba(40, 70, 140, 0.55);
+  box-shadow: 0 0 0 3px rgba(20, 40, 100, 0.25);
+}
+
+.footer__submit {
+  align-self: flex-start;
+  margin-top: 0.35rem;
+  min-height: 48px;
+  padding: 0.7rem 1.5rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  background: #0a1528;
+  color: var(--color-white);
+  font-size: var(--fs-body);
+  font-weight: 600;
+  box-shadow:
+    0 0 0 1px rgba(20, 50, 120, 0.25),
+    0 0 22px 4px rgba(15, 40, 110, 0.4),
+    0 0 48px 8px rgba(10, 30, 90, 0.22);
+  transition:
+    box-shadow 220ms var(--ease-out),
+    background 220ms var(--ease-out);
+}
+
+.footer__submit:hover,
+.footer__submit:focus-visible {
+  background: #0e1a32;
+  box-shadow:
+    0 0 0 1px rgba(30, 70, 150, 0.35),
+    0 0 28px 6px rgba(20, 50, 130, 0.5),
+    0 0 56px 12px rgba(12, 35, 100, 0.28);
+}
+
+.footer__copy {
+  flex-shrink: 0;
+  text-align: center;
+  margin-top: 2.5rem;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  color: rgba(190, 200, 220, 0.5);
+}
+
+@media (min-width: 900px) {
+  .footer__grid {
+    grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.85fr);
+    gap: clamp(3rem, 8vw, 7rem);
+    align-items: start;
+  }
+
+  .footer__form {
+    max-width: none;
+    justify-self: stretch;
+  }
+}
+
+@media (max-width: 899px) {
+  .footer__shell {
+    overflow-y: auto;
+  }
+
+  .footer__content {
+    align-items: flex-start;
+  }
+
+  .footer__form {
+    max-width: none;
+  }
+}

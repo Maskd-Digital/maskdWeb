@@ -1,0 +1,108 @@
+/**
+ * Mask'd design tokens
+ * Typography — Style Guide (Plus Jakarta Sans, Mobile)
+ * Heading 01: 24px / Semi Bold (600) / 15px LH
+ * Heading 02: 16px / Medium (500) / 20px LH
+ * Body:       12px / Medium (500) / 15px LH
+ * Body italic:12px / Light Italic (300) / 15px LH
+ */
+:root {
+  --color-bg: #f0f4ff;
+  --color-primary: #0108b8;
+  --color-text: #071635;
+
+  --color-page: #040d1e;
+  --color-loading-dark: #0f1628;
+  --color-white: #ffffff;
+
+  --color-orb-deep: #0011bb;
+  --color-orb-mid: #1a2aff;
+  --color-orb-light: #a0b0ff;
+
+  --font-family: var(--font-plus-jakarta), "Plus Jakarta Sans", sans-serif;
+
+  /* Heading 01 — style guide mobile */
+  --fs-h1: 24px;
+  --fw-h1: 600; /* Semi Bold */
+  /* Guide lists 15px; that collapses multi-line titles — use 30px (1.25) for wrap */
+  --lh-h1: 30px;
+
+  /* Heading 02 — style guide mobile */
+  --fs-h2: 16px;
+  --fw-h2: 500; /* Medium */
+  --lh-h2: 20px;
+
+  /* Section titles share Heading 01 */
+  --fs-section: var(--fs-h1);
+  --fw-section: var(--fw-h1);
+  --lh-section: var(--lh-h1);
+
+  /* Body Text — style guide mobile */
+  --fs-body: 12px;
+  --fw-body: 500; /* Medium */
+  --lh-body: 15px;
+
+  /* Body Text italic — style guide mobile */
+  --fs-body-italic: 12px;
+  --fw-body-italic: 300; /* Light Italic */
+  --lh-body-italic: 15px;
+
+  --page-pad-x: clamp(1rem, 3.5vw, 2.5rem);
+  --section-pad-y: clamp(2rem, 4.5vw, 3.25rem);
+  --container-max: 1120px;
+  --header-h: 4.25rem;
+  --touch-min: 44px;
+
+  --pillar-count: 22;
+
+  /* Card drop shadow — Capabilities & Craft reference */
+  --shadow-card: 0px 6px 20px 5px rgba(0, 10, 255, 0.25);
+
+  --ease-out: cubic-bezier(0.22, 1, 0.36, 1);
+  --duration-loading: 900ms;
+}
+
+/* Desktop — scaled from the mobile style guide (guide only specifies Mobile) */
+@media (min-width: 768px) {
+  :root {
+    --fs-h1: 32px;
+    --lh-h1: 40px;
+
+    --fs-h2: 18px;
+    --lh-h2: 24px;
+
+    --fs-section: var(--fs-h1);
+    --lh-section: var(--lh-h1);
+
+    --fs-body: 14px;
+    --lh-body: 20px;
+
+    --fs-body-italic: 14px;
+    --lh-body-italic: 20px;
+  }
+}
+
+@media (min-width: 1100px) {
+  :root {
+    --fs-h1: 40px;
+    --lh-h1: 48px;
+
+    --fs-h2: 20px;
+    --lh-h2: 26px;
+
+    --fs-section: var(--fs-h1);
+    --lh-section: var(--lh-h1);
+
+    --fs-body: 15px;
+    --lh-body: 22px;
+
+    --fs-body-italic: 15px;
+    --lh-body-italic: 22px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  :root {
+    --duration-loading: 0ms;
+  }
+}

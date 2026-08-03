@@ -1,0 +1,194 @@
+/* Figma artboard: 1440 × 1024 — exact keyframe px values scaled with calc */
+.spotlight {
+  --blob-duration: 18s;
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+  isolation: isolate;
+  /* Same Figma horizontal base gradient as footer — BELOW cylinders */
+  background-color: #020a1a;
+  background-image: linear-gradient(
+    90deg,
+    #020919 0%,
+    #02091a 25%,
+    #020a1a 50%,
+    #020a1a 75%,
+    #020a1b 100%
+  );
+}
+
+/* Moving shapes — BEHIND the cylinder wall */
+.spotlight__blobs {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  overflow: hidden;
+}
+
+.spotlight__blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(65px);
+  mix-blend-mode: screen;
+  will-change: top, left;
+  animation-duration: var(--blob-duration);
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+  animation-direction: alternate;
+}
+
+/*
+  Figma Rectangle 17 — 105×1024 cylinder tile, repeated edge-to-edge.
+  Sits ABOVE blobs so light is modulated by the ribbed wall.
+*/
+.spotlight__cylinders {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  background-image: url("/images/hero-cylinder-tile.png");
+  background-repeat: repeat-x;
+  background-size: 105px 100%;
+  background-position: left top;
+  opacity: 0.55;
+  mix-blend-mode: overlay;
+}
+
+/*
+  Sizes: scale from frame width so circles stay circular at any hero aspect.
+  Positions: left from width (1440), top from height (1024).
+*/
+
+/* Blob 1 — #0108B8 · 800×800 */
+.spotlight__blob--1 {
+  background-color: #0108b8;
+  width: calc(800 / 1440 * 100%);
+  aspect-ratio: 1;
+  height: auto;
+  top: calc(376 / 1024 * 100%);
+  left: calc(-96 / 1440 * 100%);
+  animation-name: blob-1;
+  animation-delay: 0s;
+}
+
+/* Blob 2 — #8E92FF · 544×544 */
+.spotlight__blob--2 {
+  background-color: #8e92ff;
+  width: calc(544 / 1440 * 100%);
+  aspect-ratio: 1;
+  height: auto;
+  top: calc(632 / 1024 * 100%);
+  left: calc(448 / 1440 * 100%);
+  animation-name: blob-2;
+  animation-delay: -3s;
+}
+
+/* Blob 3 — #0108B8 · 403×403 */
+.spotlight__blob--3 {
+  background-color: #0108b8;
+  width: calc(403 / 1440 * 100%);
+  aspect-ratio: 1;
+  height: auto;
+  top: calc(760 / 1024 * 100%);
+  left: calc(889 / 1440 * 100%);
+  animation-name: blob-3;
+  animation-delay: -6s;
+}
+
+/* Blob 4 — #8E92FF · 715×721 */
+.spotlight__blob--4 {
+  background-color: #8e92ff;
+  width: calc(715 / 1440 * 100%);
+  aspect-ratio: 715 / 721;
+  height: auto;
+  top: calc(363 / 1024 * 100%);
+  left: calc(1113 / 1440 * 100%);
+  animation-name: blob-4;
+  animation-delay: -9s;
+}
+
+/* Exact Figma keyframes — 0% / 33% / 66% / 100% */
+
+@keyframes blob-1 {
+  0% {
+    top: calc(376 / 1024 * 100%);
+    left: calc(-96 / 1440 * 100%);
+  }
+  33% {
+    top: calc(83 / 1024 * 100%);
+    left: calc(195 / 1440 * 100%);
+  }
+  66% {
+    top: calc(146 / 1024 * 100%);
+    left: calc(772 / 1440 * 100%);
+  }
+  100% {
+    top: calc(643 / 1024 * 100%);
+    left: calc(340 / 1440 * 100%);
+  }
+}
+
+@keyframes blob-2 {
+  0% {
+    top: calc(632 / 1024 * 100%);
+    left: calc(448 / 1440 * 100%);
+  }
+  33% {
+    top: calc(650 / 1024 * 100%);
+    left: calc(-60 / 1440 * 100%);
+  }
+  66% {
+    top: calc(154 / 1024 * 100%);
+    left: calc(419 / 1440 * 100%);
+  }
+  100% {
+    top: calc(480 / 1024 * 100%);
+    left: calc(1035 / 1440 * 100%);
+  }
+}
+
+@keyframes blob-3 {
+  0% {
+    top: calc(760 / 1024 * 100%);
+    left: calc(889 / 1440 * 100%);
+  }
+  33% {
+    top: calc(822 / 1024 * 100%);
+    left: calc(352 / 1440 * 100%);
+  }
+  66% {
+    top: calc(426 / 1024 * 100%);
+    left: calc(195 / 1440 * 100%);
+  }
+  100% {
+    top: calc(209 / 1024 * 100%);
+    left: calc(930 / 1440 * 100%);
+  }
+}
+
+@keyframes blob-4 {
+  0% {
+    top: calc(363 / 1024 * 100%);
+    left: calc(1113 / 1440 * 100%);
+  }
+  33% {
+    top: calc(650 / 1024 * 100%);
+    left: calc(678 / 1440 * 100%);
+  }
+  66% {
+    top: calc(585 / 1024 * 100%);
+    left: calc(-57 / 1440 * 100%);
+  }
+  100% {
+    top: calc(139 / 1024 * 100%);
+    left: calc(320 / 1440 * 100%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .spotlight__blob {
+    animation: none !important;
+  }
+}

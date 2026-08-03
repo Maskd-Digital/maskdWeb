@@ -1,0 +1,125 @@
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* 1) First — light bluish */
+.loading-screen--light {
+  background-color: var(--color-primary);
+}
+
+/* 2) Second — darker (boxes open to reveal this) */
+.loading-screen--dark {
+  background-color: var(--color-loading-dark);
+}
+
+.loading-screen__logo {
+  position: relative;
+  z-index: 2;
+  width: clamp(140px, 28vw, 220px);
+  height: auto;
+  object-fit: contain;
+  animation: logo-settle 700ms var(--ease-out) both;
+}
+
+.loading-screen--dark .loading-screen__logo {
+  animation: logo-hold 200ms var(--ease-out) both;
+}
+
+/* Boxes: light bluish bars; darker shows only as they open */
+.loading-boxes {
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  display: flex;
+  gap: clamp(4px, 0.6vw, 8px);
+  padding-inline: clamp(2px, 0.4vw, 6px);
+  pointer-events: none;
+}
+
+.loading-boxes__col {
+  position: relative;
+  flex: 1;
+  min-width: 0;
+  height: 100%;
+}
+
+.loading-boxes__bar {
+  position: absolute;
+  left: 0;
+  right: 0;
+  /* Overlap so darker never flashes before open */
+  height: 52%;
+  background: var(--color-primary);
+  will-change: transform;
+}
+
+.loading-boxes__bar--top {
+  top: 0;
+  border-radius: 0 0 clamp(18px, 2.5vw, 36px) clamp(18px, 2.5vw, 36px);
+  transform: translateY(0);
+  animation: box-open-top 1.15s var(--ease-out) both;
+  animation-delay: calc(0.35s + var(--open-delay, 0s));
+}
+
+.loading-boxes__bar--bottom {
+  bottom: 0;
+  border-radius: clamp(18px, 2.5vw, 36px) clamp(18px, 2.5vw, 36px) 0 0;
+  transform: translateY(0);
+  animation: box-open-bottom 1.15s var(--ease-out) both;
+  animation-delay: calc(0.35s + var(--open-delay, 0s));
+}
+
+@keyframes box-open-top {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(-105%);
+  }
+}
+
+@keyframes box-open-bottom {
+  0% {
+    transform: translateY(0);
+  }
+  100% {
+    transform: translateY(105%);
+  }
+}
+
+@keyframes logo-settle {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes logo-hold {
+  from {
+    opacity: 0.85;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-boxes__bar--top,
+  .loading-boxes__bar--bottom {
+    animation-duration: 0.01ms;
+    animation-delay: 0s;
+  }
+
+  .loading-screen__logo {
+    animation: none;
+  }
+}

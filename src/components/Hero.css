@@ -1,0 +1,160 @@
+.hero {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1.5rem var(--page-pad-x) clamp(3.5rem, 9vh, 5.5rem);
+  min-height: 0;
+}
+
+.hero__title {
+  /* Wide enough for "Let's Tell Your Brand Story" on line 1;
+     line 2 is "Through Design." via explicit <br /> */
+  max-width: min(18em, 100%);
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-h1);
+  line-height: var(--lh-h1);
+  color: var(--color-white);
+  margin-bottom: 0.85rem;
+  text-wrap: balance;
+}
+
+/* Keep "Through" + rotating word on one baseline */
+.hero__title-line2 {
+  display: inline-flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.3em;
+  white-space: nowrap;
+  max-width: 100%;
+}
+
+.hero__rotate {
+  position: relative;
+  display: inline-block;
+  width: fit-content;
+  max-width: 100%;
+  /* overflow:hidden breaks baseline (box bottom aligns instead of text) */
+  overflow: visible;
+  line-height: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  vertical-align: baseline;
+}
+
+.hero__rotate-word {
+  display: inline-block;
+  white-space: nowrap;
+  color: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  line-height: inherit;
+  margin: 0;
+  padding: 0;
+  vertical-align: baseline;
+  will-change: opacity, transform;
+  transition:
+    opacity 400ms var(--ease-out),
+    transform 400ms var(--ease-out);
+}
+
+.hero__rotate-word--in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.hero__rotate-word--out {
+  opacity: 0;
+  transform: translateY(-0.25em);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero__rotate-word {
+    transition: none;
+  }
+
+  .hero__rotate-word--out {
+    transform: none;
+  }
+}
+
+.hero__sub {
+  max-width: min(46ch, 100%);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: var(--lh-body);
+  color: rgba(230, 235, 255, 0.92);
+  margin-bottom: 1.75rem;
+  text-wrap: pretty;
+}
+
+/* Frosted glass CTA */
+.hero__cta {
+  position: relative;
+  z-index: 2;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: var(--touch-min);
+  padding: 0.9rem clamp(1.6rem, 4vw, 2.25rem);
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.55);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.22) 0%,
+    rgba(255, 255, 255, 0.08) 100%
+  );
+  backdrop-filter: blur(20px) saturate(180%);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.5),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.08),
+    0 8px 32px rgba(0, 0, 0, 0.28);
+  color: var(--color-white);
+  font-size: var(--fs-body);
+  font-weight: var(--fw-h1);
+  overflow: hidden;
+  transition:
+    transform 250ms var(--ease-out),
+    background 250ms var(--ease-out),
+    border-color 250ms var(--ease-out),
+    box-shadow 250ms var(--ease-out);
+}
+
+.hero__cta::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    125deg,
+    rgba(255, 255, 255, 0.35) 0%,
+    rgba(255, 255, 255, 0.05) 35%,
+    transparent 55%
+  );
+  pointer-events: none;
+}
+
+.hero__cta-label {
+  position: relative;
+  z-index: 1;
+}
+
+.hero__cta:hover,
+.hero__cta:focus-visible {
+  transform: translateY(-2px);
+  border-color: rgba(255, 255, 255, 0.8);
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.32) 0%,
+    rgba(255, 255, 255, 0.12) 100%
+  );
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.6),
+    inset 0 -1px 0 rgba(255, 255, 255, 0.1),
+    0 12px 36px rgba(1, 8, 184, 0.35);
+}

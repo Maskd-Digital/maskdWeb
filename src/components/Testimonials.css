@@ -1,0 +1,166 @@
+.testimonials {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) 0;
+}
+
+.testimonials__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 1100px;
+}
+
+.testimonials__header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: clamp(2rem, 4vw, 2.75rem);
+}
+
+.testimonials__title {
+  margin-bottom: 0.75rem;
+}
+
+.testimonials__title-accent {
+  font-weight: var(--fw-body-italic);
+  font-style: italic;
+  color: #a0b0ff;
+}
+
+.testimonials__lede {
+  max-width: 48ch;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(200, 210, 255, 0.75);
+  text-wrap: pretty;
+}
+
+.testimonials__rail {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.25rem, 3vw, 2.5rem);
+  align-items: stretch;
+}
+
+.testimonials__card {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  height: 100%;
+  min-height: 0;
+  padding: clamp(1.5rem, 3vw, 2rem);
+  border-radius: 20px;
+  background: #020a1b;
+  box-shadow: var(--shadow-card);
+  transition: transform 280ms var(--ease-out);
+}
+
+.testimonials__card:hover,
+.testimonials__card:focus-within {
+  transform: translateY(-3px);
+}
+
+.testimonials__quote {
+  flex: 1;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: 1.65;
+  color: rgba(230, 235, 255, 0.88);
+  text-align: left;
+  text-wrap: pretty;
+}
+
+.testimonials__quote::before {
+  content: "“";
+  color: rgba(160, 176, 255, 0.45);
+  margin-right: 0.1em;
+}
+
+.testimonials__author {
+  display: flex;
+  align-items: center;
+  gap: 0.85rem;
+  margin-top: auto;
+  padding-top: 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.testimonials__avatar {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  flex-shrink: 0;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-h1);
+  letter-spacing: 0.04em;
+  color: rgba(230, 235, 255, 0.95);
+  background: #0a1630;
+  border: 1px solid rgba(160, 176, 255, 0.2);
+}
+
+.testimonials__meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.15rem;
+  min-width: 0;
+}
+
+.testimonials__name {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-h1);
+  color: var(--color-white);
+}
+
+.testimonials__role {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  color: rgba(160, 176, 255, 0.65);
+}
+
+@media (min-width: 720px) {
+  .testimonials__rail {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 40px;
+  }
+
+  /* Odd last card on 2-col: full width */
+  .testimonials__card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (min-width: 1100px) {
+  /* 6-unit grid → cards span 2 (= 3 columns). Incomplete last row stretches to fill. */
+  .testimonials__rail {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .testimonials__card {
+    grid-column: span 2;
+  }
+
+  /* Clear the 2-col full-bleed rule */
+  .testimonials__card:last-child:nth-child(odd) {
+    grid-column: span 2;
+  }
+
+  /* 5 cards: bottom pair each takes half the row */
+  .testimonials__rail:has(> :nth-child(5):last-child) > :nth-child(4),
+  .testimonials__rail:has(> :nth-child(5):last-child) > :nth-child(5) {
+    grid-column: span 3;
+  }
+
+  /* 4 or 7 cards etc.: single leftover spans full width */
+  .testimonials__card:last-child:nth-child(3n + 1) {
+    grid-column: 1 / -1;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .testimonials__card {
+    transition: none;
+  }
+}

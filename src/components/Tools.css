@@ -1,0 +1,164 @@
+.tools {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) 0;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.tools__blueprint {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(rgba(1, 8, 184, 0.22), rgba(1, 8, 184, 0.22)),
+    repeating-linear-gradient(
+      0deg,
+      transparent 0,
+      transparent 47px,
+      rgba(160, 176, 255, 0.08) 47px,
+      rgba(160, 176, 255, 0.08) 48px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      transparent 0,
+      transparent 47px,
+      rgba(160, 176, 255, 0.08) 47px,
+      rgba(160, 176, 255, 0.08) 48px
+    );
+  mask-image: radial-gradient(ellipse at center, #000 35%, transparent 80%);
+  opacity: 0.9;
+}
+
+.tools__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.tools__title {
+  font-size: var(--fs-section);
+  font-weight: var(--fw-section);
+  line-height: var(--lh-section);
+  color: rgba(180, 200, 255, 0.95);
+  margin-bottom: 0.65rem;
+  text-align: center;
+}
+
+.tools__title-accent {
+  font-weight: var(--fw-body-italic);
+  font-style: italic;
+  color: #a0b0ff;
+  text-shadow: 0 0 24px rgba(1, 8, 184, 0.55);
+}
+
+.tools__lede {
+  max-width: 48ch;
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(200, 210, 255, 0.75);
+  text-wrap: pretty;
+}
+
+.tools__grid {
+  display: grid;
+  width: 100%;
+  grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+  gap: clamp(0.85rem, 2vw, 1.15rem);
+  max-width: 1100px;
+}
+
+.tools__cell {
+  min-width: 0;
+}
+
+.tools__tile {
+  --tint: #a0b0ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  aspect-ratio: 1;
+  padding: 0.75rem 0.45rem;
+  border-radius: 20px;
+  border: 1px dashed rgba(160, 176, 255, 0.22);
+  background: #020a1b;
+  box-shadow: var(--shadow-card);
+  transition:
+    transform 250ms var(--ease-out),
+    border-color 250ms var(--ease-out),
+    box-shadow 250ms var(--ease-out),
+    background-color 250ms var(--ease-out);
+}
+
+.tools__tile:hover,
+.tools__tile:focus-within {
+  transform: translateY(-4px);
+  border-color: color-mix(in srgb, var(--tint) 55%, transparent);
+  border-style: solid;
+  background: rgba(1, 8, 184, 0.22);
+  box-shadow: var(--shadow-card);
+}
+
+.tools__logo-wrap {
+  display: grid;
+  place-items: center;
+  width: 56%;
+  aspect-ratio: 1;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.96);
+  box-shadow: 0 0 18px color-mix(in srgb, var(--tint) 28%, transparent);
+  overflow: hidden;
+}
+
+/* Light/white brand marks need a dark plate */
+.tools__tile[data-light-logo="true"] .tools__logo-wrap {
+  background: #121826;
+}
+
+.tools__logo {
+  width: 62%;
+  height: 62%;
+  object-fit: contain;
+}
+
+.tools__tile:has(.tools__logo[src$="logo-figma.png"]) .tools__logo {
+  width: 100%;
+  height: 100%;
+}
+
+.tools__name {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  color: rgba(230, 235, 255, 0.88);
+  line-height: var(--lh-body);
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  padding-inline: 0.15rem;
+}
+
+@media (min-width: 640px) {
+  .tools__grid {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+}
+
+@media (min-width: 900px) {
+  .tools__grid {
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 420px) {
+  .tools__grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}

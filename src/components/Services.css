@@ -1,0 +1,162 @@
+.services {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) 0;
+  overflow: visible;
+}
+
+.services__heading {
+  /* Section title — Heading 01 tokens + periwinkle tint (pending exact Figma gradient) */
+  color: rgba(180, 200, 255, 0.95);
+}
+
+.services__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.5rem, 3.5vw, 2.5rem);
+  justify-items: center;
+  overflow: visible;
+}
+
+.service-card {
+  --card-w: 545;
+  --card-h: 523;
+
+  position: relative;
+  z-index: 0;
+  /* Keep glow + effects clipped inside the card */
+  overflow: hidden;
+  width: 100%;
+  max-width: 545px;
+  aspect-ratio: 545 / 523;
+  padding: clamp(1.5rem, 3.2vw, 2.15rem) clamp(1.5rem, 3.5vw, 2.35rem)
+    clamp(1.75rem, 3.5vw, 2.5rem);
+  border: none;
+  border-radius: 20px;
+  background: #020a1b;
+  box-shadow: var(--shadow-card);
+  display: flex;
+  flex-direction: column;
+  transition: z-index 0s;
+}
+
+.service-card:hover,
+.service-card:focus-within {
+  z-index: 2;
+}
+
+/*
+  Active glow blob — kept inside the card so blue fills behind icon + copy
+  (matches Figma Rectangle 28 shape, clipped by card overflow)
+*/
+.service-card__glow {
+  position: absolute;
+  height: calc(524 / 523 * 100%);
+  left: 0%;
+  right: -0.18%;
+  top: calc(50% - (524 / 523 * 100% / 2) + 0.5px);
+  background: #0108b8;
+  border-radius: 1000px 1000px 20px 1000px;
+  z-index: 0;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 400ms var(--ease-out);
+}
+
+.service-card:hover .service-card__glow,
+.service-card:focus-within .service-card__glow {
+  opacity: 1;
+}
+
+/*
+  Icon + heading on one row (parallel / aligned)
+*/
+.service-card__top {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  gap: clamp(0.75rem, 1.8vw, 1.15rem);
+  margin-bottom: clamp(0.85rem, 1.8vw, 1.25rem);
+}
+
+.service-card__icon {
+  width: 18.17%;
+  max-width: 99px;
+  min-width: 64px;
+  aspect-ratio: 1;
+  margin-bottom: 0;
+  background: transparent;
+  flex-shrink: 0;
+  filter: drop-shadow(0px 6px 10px rgba(0, 0, 0, 0.35));
+}
+
+.service-card__icon img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  display: block;
+  background: transparent;
+}
+
+.service-card__title {
+  flex: 1;
+  min-width: 0;
+  /* Larger / bolder than default H02 to match Figma card headings */
+  font-size: clamp(20px, 2.4vw, 28px);
+  font-weight: 600;
+  line-height: 1.25;
+  margin-bottom: 0;
+  /* Non-active: light periwinkle (pending exact Figma gradient) */
+  color: #a0b0ff;
+  transition: color 300ms var(--ease-out);
+}
+
+.service-card:hover .service-card__title,
+.service-card:focus-within .service-card__title {
+  color: var(--color-white);
+}
+
+.service-card__body {
+  position: relative;
+  z-index: 1;
+  flex: 1;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  line-height: var(--lh-body);
+  color: rgba(255, 255, 255, 0.9);
+  text-align: justify;
+  text-wrap: pretty;
+  hyphens: auto;
+}
+
+@media (hover: none) {
+  .service-card:active .service-card__glow,
+  .service-card:focus-within .service-card__glow {
+    opacity: 1;
+  }
+}
+
+@media (min-width: 720px) {
+  .services__grid {
+    grid-template-columns: repeat(2, minmax(0, 545px));
+    justify-content: center;
+    gap: 40px;
+  }
+}
+
+@media (min-width: 1100px) {
+  .services .container {
+    width: min(100% - (var(--page-pad-x) * 2), 1130px);
+  }
+
+  .services__grid {
+    gap: 40px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .service-card__glow {
+    transition: none;
+  }
+}

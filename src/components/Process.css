@@ -1,0 +1,211 @@
+.process {
+  position: relative;
+  z-index: 1;
+  padding: var(--section-pad-y) 0;
+  overflow: hidden;
+}
+
+.process__layout {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: clamp(1.75rem, 4vw, 3rem);
+  align-items: start;
+}
+
+.process__intro {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.process__title {
+  font-size: var(--fs-section);
+  font-weight: var(--fw-section);
+  line-height: var(--lh-section);
+  color: rgba(180, 200, 255, 0.95);
+  text-wrap: balance;
+  max-width: 14ch;
+  text-align: left;
+  margin-bottom: 0;
+}
+
+.process__title-accent {
+  color: #8ea0ff;
+  text-shadow: 0 0 28px rgba(1, 8, 184, 0.75);
+}
+
+.process__lede {
+  max-width: 36ch;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(200, 210, 255, 0.78);
+  text-wrap: pretty;
+}
+
+.process__meter {
+  position: relative;
+  width: min(180px, 42vw);
+  aspect-ratio: 1;
+  margin-top: 0.5rem;
+}
+
+.process__ring {
+  width: 100%;
+  height: 100%;
+  transform: rotate(-90deg);
+}
+
+.process__ring-track {
+  fill: none;
+  stroke: rgba(160, 176, 255, 0.15);
+  stroke-width: 3;
+}
+
+.process__ring-progress {
+  fill: none;
+  stroke: var(--color-primary);
+  stroke-width: 3.5;
+  stroke-linecap: round;
+  stroke-dasharray: 490;
+  stroke-dashoffset: calc(490 - 490 * var(--progress, 0.25));
+  filter: drop-shadow(0 0 10px rgba(1, 8, 184, 0.85));
+  transition: stroke-dashoffset 500ms var(--ease-out);
+}
+
+.process__meter-label {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.2rem;
+  font-weight: 600;
+}
+
+.process__meter-num {
+  font-size: var(--fs-h1);
+  font-weight: var(--fw-h1);
+  line-height: var(--lh-h1);
+  color: var(--color-white);
+}
+
+.process__meter-total {
+  font-size: var(--fs-body);
+  font-weight: var(--fw-body);
+  color: rgba(160, 176, 255, 0.65);
+  align-self: flex-end;
+  margin-bottom: 0.55em;
+}
+
+.process__steps {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  position: relative;
+  padding-left: 0.25rem;
+}
+
+.process__steps::before {
+  content: "";
+  position: absolute;
+  left: 1.15rem;
+  top: 1.4rem;
+  bottom: 1.4rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(1, 8, 184, 0.9),
+    rgba(160, 176, 255, 0.15)
+  );
+}
+
+.process__step {
+  position: relative;
+}
+
+.process__step-btn {
+  display: grid;
+  gap: 0.45rem;
+  width: 100%;
+  text-align: left;
+  padding: 1rem 0.75rem 1rem 2.75rem;
+  border-radius: 12px;
+  transition:
+    background-color 250ms var(--ease-out),
+    transform 250ms var(--ease-out);
+}
+
+.process__step-btn:hover,
+.process__step-btn:focus-visible {
+  background: rgba(1, 8, 184, 0.12);
+}
+
+.process__step-btn:focus-visible {
+  outline: 1px solid rgba(160, 176, 255, 0.5);
+  outline-offset: 2px;
+}
+
+.process__badge {
+  display: inline-flex;
+  align-items: center;
+  width: fit-content;
+  min-height: 1.7rem;
+  padding: 0.2rem 0.75rem;
+  border-radius: 999px;
+  font-size: var(--fs-body);
+  font-weight: var(--fw-h1);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(160, 176, 255, 0.28);
+  color: rgba(200, 210, 255, 0.7);
+  background: transparent;
+  transition:
+    background-color 250ms var(--ease-out),
+    border-color 250ms var(--ease-out),
+    color 250ms var(--ease-out),
+    box-shadow 250ms var(--ease-out);
+}
+
+.process__step[data-state="active"] .process__badge,
+.process__step[data-state="done"] .process__badge {
+  background: var(--color-primary);
+  border-color: var(--color-primary);
+  color: var(--color-white);
+  box-shadow: 0 0 18px rgba(1, 8, 184, 0.55);
+}
+
+.process__step-title {
+  font-size: var(--fs-h2);
+  font-weight: var(--fw-h2);
+  line-height: var(--lh-h2);
+  color: var(--color-white);
+}
+
+.process__step-body {
+  max-width: 48ch;
+  font-size: var(--fs-body);
+  line-height: var(--lh-body);
+  color: rgba(200, 210, 255, 0.62);
+  transition: color 250ms var(--ease-out);
+}
+
+.process__step[data-state="active"] .process__step-body {
+  color: rgba(230, 235, 255, 0.92);
+}
+
+.process__step[data-state="next"] .process__step-title {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+@media (min-width: 900px) {
+  .process__layout {
+    grid-template-columns: minmax(240px, 0.9fr) minmax(0, 1.1fr);
+    gap: 3.5rem;
+    align-items: center;
+  }
+
+  .process__meter {
+    width: 200px;
+  }
+}
