@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useId, useState, type CSSProperties } from "react";
+import { useEffect, useId, useRef, useState, type CSSProperties, type TouchEvent } from "react";
 import { createPortal } from "react-dom";
 import "./Portfolio.css";
 
@@ -114,13 +114,35 @@ const PROJECTS: Project[] = [
   },
 ];
 
+function wrapOffset(index: number, active: number, length: number) {
+  let diff = index - active;
+  if (diff > length / 2) diff -= length;
+  if (diff < -length / 2) diff += length;
+  return diff;
+}
+
 export function Portfolio() {
   /* 5-card fan — center index matches Figma (middle of visible arc) */
   const mid = Math.floor((PROJECTS.length - 1) / 2);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [selected, setSelected] = useState<Project | null>(null);
   const [mounted, setMounted] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+  const [active, setActive] = useState(mid);
   const titleId = useId();
+  const touchStartX = useRef<number | null>(null);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    const media = window.matchMedia("(max-width: 640px)");
+    const apply = () => setIsMobile(media.matches);
+    apply();
+    media.addEventListener("change", apply);
+    return () => media.removeEventListener("change", apply);
+  }, []);
 
   useEffect(() => {
     setMounted(true);
@@ -237,57 +259,144 @@ export function Portfolio() {
         )
       : null;
 
+  const prev = () =>
+    setActive((current) => (current - 1 + PROJECTS.length) % PROJECTS.length);
+  const next = () => setActive((current) => (current + 1) % PROJECTS.length);
+
+  function onStageTouchStart(event: TouchEvent<HTMLDivElement>) {
+    touchStartX.current = event.changedTouches[0]?.clientX ?? null;
+  }
+
+  function onStageTouchEnd(event: TouchEvent<HTMLDivElement>) {
+    if (touchStartX.current == null) return;
+    const endX = event.changedTouches[0]?.clientX ?? touchStartX.current;
+    const delta = endX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(delta) < 40) return;
+    if (delta > 0) prev();
+    else next();
+  }
+
   return (
     <section className="portfolio" id="work" aria-labelledby="portfolio-heading">
       <div className="container">
         <h2 id="portfolio-heading" className="section-title">
           Masterpieces Crafted By Us
         </h2>
-        <p className="portfolio__hint">Hover to highlight · Click for details</p>
+        <p className="portfolio__hint portfolio__hint--desktop">
+          Hover to highlight · Click for details
+        </p>
+        <p className="portfolio__hint portfolio__hint--mobile">
+          Swipe or use arrows · Tap the center card for details
+        </p>
 
-        <div className="portfolio__stage" role="list">
-          {PROJECTS.map((project, index) => {
-            const offset = index - mid;
-            const isHighlighted = hoveredId === project.id;
+        <div className="portfolio__carousel">
+          <div
+            className="portfolio__stage"
+            role="list"
+            onTouchStart={onStageTouchStart}
+            onTouchEnd={onStageTouchEnd}
+          >
+            {PROJECTS.map((project, index) => {
+              const offset = isMobile
+                ? wrapOffset(index, active, PROJECTS.length)
+                : index - mid;
+              const isHighlighted = hoveredId === project.id;
+              const isCenter = offset === 0;
 
-            return (
-              <article
-                key={project.id}
-                className="portfolio__card"
-                role="listitem"
-                tabIndex={0}
-                data-offset={offset}
-                data-highlighted={isHighlighted ? "true" : "false"}
-                style={
-                  {
-                    "--offset": offset,
-                    zIndex: isHighlighted ? 50 : 30 - Math.abs(offset) * 10,
-                  } as CSSProperties
-                }
-                onMouseEnter={() => setHoveredId(project.id)}
-                onMouseLeave={() => setHoveredId(null)}
-                onFocus={() => setHoveredId(project.id)}
-                onBlur={() => setHoveredId(null)}
-                onClick={() => setSelected(project)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" || e.key === " ") {
-                    e.preventDefault();
-                    setSelected(project);
+              return (
+                <article
+                  key={project.id}
+                  className="portfolio__card"
+                  role="listitem"
+                  tabIndex={Math.abs(offset) <= 1 ? 0 : -1}
+                  data-offset={offset}
+                  data-highlighted={isHighlighted || (isMobile && isCenter) ? "true" : "false"}
+                  style={
+                    {
+                      "--offset": offset,
+                      zIndex: isHighlighted ? 50 : 30 - Math.abs(offset) * 10,
+                    } as CSSProperties
                   }
-                }}
-                aria-label={`${project.name}. Open project details`}
-              >
-                <img
-                  className="portfolio__card-media"
-                  src={project.image}
-                  alt=""
-                  draggable={false}
+                  onMouseEnter={() => setHoveredId(project.id)}
+                  onMouseLeave={() => setHoveredId(null)}
+                  onFocus={() => setHoveredId(project.id)}
+                  onBlur={() => setHoveredId(null)}
+                  onClick={() => {
+                    if (isMobile && !isCenter) {
+                      setActive(index);
+                      return;
+                    }
+                    setSelected(project);
+                  }}
+                  onKeyDown={(e) => {
+                    if (e.key === "Enter" || e.key === " ") {
+                      e.preventDefault();
+                      if (isMobile && !isCenter) {
+                        setActive(index);
+                        return;
+                      }
+                      setSelected(project);
+                    }
+                  }}
+                  aria-label={`${project.name}. Open project details`}
+                  aria-hidden={Math.abs(offset) > 1}
+                >
+                  <img
+                    className="portfolio__card-media"
+                    src={project.image}
+                    alt=""
+                    draggable={false}
+                  />
+                  <div className="portfolio__card-shade" aria-hidden="true" />
+                  <p className="portfolio__card-label">{project.name}</p>
+                </article>
+              );
+            })}
+          </div>
+
+          <div className="portfolio__controls">
+            <button
+              type="button"
+              className="portfolio__arrow"
+              aria-label="Previous project"
+              aria-hidden={!isMobile}
+              tabIndex={isMobile ? 0 : -1}
+              onClick={prev}
+            >
+              ‹
+            </button>
+
+            <div
+              className="portfolio__dots"
+              role="tablist"
+              aria-label="Projects"
+              aria-hidden={!isMobile}
+            >
+              {PROJECTS.map((project, index) => (
+                <button
+                  key={project.id}
+                  type="button"
+                  className="portfolio__dot"
+                  role="tab"
+                  aria-label={`Show ${project.name}`}
+                  aria-selected={index === active}
+                  onClick={() => setActive(index)}
                 />
-                <div className="portfolio__card-shade" aria-hidden="true" />
-                <p className="portfolio__card-label">{project.name}</p>
-              </article>
-            );
-          })}
+              ))}
+            </div>
+
+            <button
+              type="button"
+              className="portfolio__arrow"
+              aria-label="Next project"
+              aria-hidden={!isMobile}
+              tabIndex={isMobile ? 0 : -1}
+              onClick={next}
+            >
+              ›
+            </button>
+          </div>
         </div>
       </div>
 
