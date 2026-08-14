@@ -66,8 +66,8 @@ export function Tools() {
       <div className="tools__blueprint" aria-hidden="true" />
 
       <div className="container tools__inner">
-        <h2 id="tools-heading" className="tools__title">
-          Tools We <span className="tools__title-accent">Trust</span>
+        <h2 id="tools-heading" className="section-title">
+          Tools We Trust
         </h2>
         <p className="tools__lede">
           The stack behind our craft — chosen for speed, reliability, and room

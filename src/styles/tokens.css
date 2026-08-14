@@ -27,25 +27,25 @@
   /* Guide lists 15px; that collapses multi-line titles — use 30px (1.25) for wrap */
   --lh-h1: 30px;
 
-  /* Heading 02 — style guide mobile */
-  --fs-h2: 16px;
+  /* Heading 02 — card titles / subheads */
+  --fs-h2: 18px;
   --fw-h2: 500; /* Medium */
-  --lh-h2: 20px;
+  --lh-h2: 24px;
 
-  /* Section titles share Heading 01 */
-  --fs-section: var(--fs-h1);
+  /* Section titles — larger than Heading 01 */
+  --fs-section: 32px;
   --fw-section: var(--fw-h1);
-  --lh-section: var(--lh-h1);
+  --lh-section: 40px;
 
-  /* Body Text — style guide mobile */
-  --fs-body: 12px;
+  /* Body Text */
+  --fs-body: 15px;
   --fw-body: 500; /* Medium */
-  --lh-body: 15px;
+  --lh-body: 22px;
 
-  /* Body Text italic — style guide mobile */
-  --fs-body-italic: 12px;
+  /* Body Text italic */
+  --fs-body-italic: 15px;
   --fw-body-italic: 300; /* Light Italic */
-  --lh-body-italic: 15px;
+  --lh-body-italic: 22px;
 
   --page-pad-x: clamp(1rem, 3.5vw, 2.5rem);
   --section-pad-y: clamp(2rem, 4.5vw, 3.25rem);
@@ -68,17 +68,17 @@
     --fs-h1: 32px;
     --lh-h1: 40px;
 
-    --fs-h2: 18px;
-    --lh-h2: 24px;
+    --fs-h2: 22px;
+    --lh-h2: 28px;
 
-    --fs-section: var(--fs-h1);
-    --lh-section: var(--lh-h1);
+    --fs-section: 42px;
+    --lh-section: 50px;
 
-    --fs-body: 14px;
-    --lh-body: 20px;
+    --fs-body: 17px;
+    --lh-body: 26px;
 
-    --fs-body-italic: 14px;
-    --lh-body-italic: 20px;
+    --fs-body-italic: 17px;
+    --lh-body-italic: 26px;
   }
 }
 
@@ -87,17 +87,26 @@
     --fs-h1: 40px;
     --lh-h1: 48px;
 
-    --fs-h2: 20px;
-    --lh-h2: 26px;
+    --fs-h2: 24px;
+    --lh-h2: 32px;
 
-    --fs-section: var(--fs-h1);
-    --lh-section: var(--lh-h1);
+    --fs-section: 52px;
+    --lh-section: 62px;
 
-    --fs-body: 15px;
-    --lh-body: 22px;
+    --fs-body: 18px;
+    --lh-body: 28px;
 
-    --fs-body-italic: 15px;
-    --lh-body-italic: 22px;
+    --fs-body-italic: 18px;
+    --lh-body-italic: 28px;
+  }
+}
+
+@media (max-width: 480px) {
+  :root {
+    --fs-section: 28px;
+    --lh-section: 36px;
+    --page-pad-x: 1.15rem;
+    --section-pad-y: clamp(2.25rem, 7vw, 3rem);
   }
 }
 

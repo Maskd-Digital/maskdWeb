@@ -18,16 +18,6 @@
   margin-bottom: clamp(2rem, 4vw, 2.75rem);
 }
 
-.testimonials__title {
-  margin-bottom: 0.75rem;
-}
-
-.testimonials__title-accent {
-  font-weight: var(--fw-body-italic);
-  font-style: italic;
-  color: #a0b0ff;
-}
-
 .testimonials__lede {
   max-width: 48ch;
   font-size: var(--fs-body);

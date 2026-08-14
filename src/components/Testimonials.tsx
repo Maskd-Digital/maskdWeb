@@ -52,12 +52,8 @@ export function Testimonials() {
     >
       <div className="container testimonials__inner">
         <header className="testimonials__header">
-          <h2
-            id="testimonials-heading"
-            className="section-title testimonials__title"
-          >
-            Client Words{" "}
-            <span className="testimonials__title-accent">About Mask&apos;d</span>
+          <h2 id="testimonials-heading" className="section-title">
+            Client Words About Mask&apos;d
           </h2>
           <p className="testimonials__lede">
             Trusted by founders and teams who care about craft, clarity, and

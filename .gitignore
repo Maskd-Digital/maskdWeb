@@ -19,6 +19,7 @@ pnpm-debug.log*
 
 # Env
 .env*.local
+.env
 
 # Editor / OS
 .vscode/*

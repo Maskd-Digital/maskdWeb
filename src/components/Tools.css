@@ -40,22 +40,6 @@
   text-align: center;
 }
 
-.tools__title {
-  font-size: var(--fs-section);
-  font-weight: var(--fw-section);
-  line-height: var(--lh-section);
-  color: rgba(180, 200, 255, 0.95);
-  margin-bottom: 0.65rem;
-  text-align: center;
-}
-
-.tools__title-accent {
-  font-weight: var(--fw-body-italic);
-  font-style: italic;
-  color: #a0b0ff;
-  text-shadow: 0 0 24px rgba(1, 8, 184, 0.55);
-}
-
 .tools__lede {
   max-width: 48ch;
   margin-bottom: clamp(1.75rem, 3.5vw, 2.75rem);
@@ -160,5 +144,14 @@
 @media (max-width: 420px) {
   .tools__grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .tools__tile {
+    padding: 0.55rem 0.3rem;
+    border-radius: 16px;
+  }
+
+  .tools__name {
+    font-size: 12px;
   }
 }

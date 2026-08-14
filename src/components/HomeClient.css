@@ -32,6 +32,15 @@
   margin-bottom: -1px;
 }
 
+@media (max-width: 767px) {
+  .page__hero-shell {
+    height: 100svh;
+    min-height: 100svh;
+    border-bottom-left-radius: 50% 36px;
+    border-bottom-right-radius: 50% 36px;
+  }
+}
+
 @media (min-width: 768px) {
   .page__hero-shell {
     border-bottom-left-radius: 50% 72px;

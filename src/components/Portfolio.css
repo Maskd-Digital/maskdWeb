@@ -1,15 +1,18 @@
 .portfolio {
   position: relative;
   z-index: 1;
-  padding: var(--section-pad-y) 0;
-  overflow: hidden;
+  padding:
+    var(--section-pad-y)
+    0
+    clamp(8rem, 26vh, 15rem);
+  overflow: visible;
 }
 
 .portfolio__hint {
   text-align: center;
   font-size: var(--fs-body);
   color: rgba(160, 176, 255, 0.65);
-  margin: -0.5rem 0 clamp(1.25rem, 3vw, 1.75rem);
+  margin: -0.5rem 0 clamp(1rem, 2.5vw, 1.5rem);
 }
 
 .portfolio__stage {
@@ -17,56 +20,87 @@
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  min-height: clamp(460px, 72vw, 640px);
-  /* Flat fan — no 3D perspective (Figma is a 2D card arc) */
-  perspective: none;
+  --card-w: clamp(210px, 31%, 300px);
+  /*
+    min-height only — fits full cards + fan tilt/drop.
+    No fixed height or overflow clip (that caused in-section scroll).
+  */
+  min-height: clamp(400px, 62vw, 520px);
   margin-inline: auto;
   width: 100%;
   max-width: 1100px;
-  padding-bottom: clamp(0.5rem, 2vw, 1.25rem);
+  padding-bottom: clamp(1rem, 2.5vw, 1.5rem);
+  overflow: visible;
 }
 
-/* Soft blue glow behind the fan cluster */
+/* Soft blue glow — kept inside stage bounds */
 .portfolio__stage::before {
   content: "";
   position: absolute;
   left: 50%;
-  bottom: 8%;
+  bottom: 0;
   z-index: 0;
-  width: min(90%, 720px);
-  height: 55%;
+  width: min(95%, 780px);
+  height: 70%;
   transform: translateX(-50%);
   background: radial-gradient(
-    ellipse 70% 60% at 50% 80%,
-    rgba(1, 8, 184, 0.38) 0%,
-    rgba(1, 8, 184, 0.12) 42%,
-    transparent 72%
+    ellipse 75% 65% at 50% 100%,
+    rgba(1, 8, 184, 0.42) 0%,
+    rgba(1, 8, 184, 0.14) 45%,
+    transparent 75%
   );
   pointer-events: none;
 }
 
-/* Fixed fan arc — positions never change on hover */
+/*
+  Figma fan — 5 cards, bottom-anchored arc
+  Center 0° · inner ±15° · outer ±30° · heavy overlap
+*/
 .portfolio__card {
   --offset: 0;
   position: absolute;
-  bottom: 12%;
+  bottom: clamp(0.5rem, 1.5vw, 1rem);
   left: 50%;
-  width: clamp(200px, 36%, 340px);
+  width: var(--card-w, clamp(210px, 31%, 300px));
   aspect-ratio: 3 / 4.2;
-  margin-left: calc(clamp(200px, 36%, 340px) / -2);
+  margin-left: calc(var(--card-w, clamp(210px, 31%, 300px)) / -2);
   border-radius: 24px;
   overflow: hidden;
   cursor: pointer;
   outline: none;
-  /* Fan from bottom-center like a hand of cards */
   transform-origin: 50% 100%;
-  transform: translateX(calc(var(--offset) * 42%))
-    translateY(calc(abs(var(--offset)) * 4%))
-    rotate(calc(var(--offset) * 9deg))
-    scale(calc(1 - abs(var(--offset)) * 0.045));
   background: #020a1b;
   box-shadow: var(--shadow-card);
   transition: box-shadow 280ms var(--ease-out);
+}
+
+.portfolio__card[data-offset="0"] {
+  transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+}
+
+.portfolio__card[data-offset="-1"] {
+  transform: translateX(-28%) translateY(8%) rotate(-15deg) scale(0.96);
+}
+
+.portfolio__card[data-offset="1"] {
+  transform: translateX(28%) translateY(8%) rotate(15deg) scale(0.96);
+}
+
+.portfolio__card[data-offset="-2"] {
+  transform: translateX(-56%) translateY(16%) rotate(-30deg) scale(0.92);
+}
+
+.portfolio__card[data-offset="2"] {
+  transform: translateX(56%) translateY(16%) rotate(30deg) scale(0.92);
+}
+
+/* Extra projects beyond the 5-card fan */
+.portfolio__card[data-offset="-3"],
+.portfolio__card[data-offset="3"],
+.portfolio__card[data-offset="-4"],
+.portfolio__card[data-offset="4"] {
+  opacity: 0;
+  pointer-events: none;
 }
 
 /* Hover / focus: highlight in place — no repositioning */
@@ -326,18 +360,38 @@
   }
 }
 
+@media (hover: none) {
+  .portfolio__card[data-offset="0"] .portfolio__card-label {
+    opacity: 1;
+  }
+}
+
 @media (max-width: 640px) {
+  .portfolio {
+    padding-bottom: clamp(3.5rem, 10vh, 6rem);
+  }
+
   .portfolio__stage {
-    min-height: 440px;
+    --card-w: min(68vw, 260px);
+    min-height: clamp(300px, 92vw, 380px);
+    padding-bottom: 1rem;
   }
 
   .portfolio__card {
-    width: min(68vw, 260px);
-    margin-left: calc(min(68vw, 260px) / -2);
-    transform: translateX(calc(var(--offset) * 28%))
-      translateY(calc(abs(var(--offset)) * 3%))
-      rotate(calc(var(--offset) * 7deg))
-      scale(calc(1 - abs(var(--offset)) * 0.04));
+    width: var(--card-w);
+    margin-left: calc(var(--card-w) / -2);
+  }
+
+  .portfolio__card[data-offset="0"] {
+    transform: translateX(0) translateY(0) rotate(0deg) scale(1);
+  }
+
+  .portfolio__card[data-offset="-1"] {
+    transform: translateX(-24%) translateY(6%) rotate(-12deg) scale(0.96);
+  }
+
+  .portfolio__card[data-offset="1"] {
+    transform: translateX(24%) translateY(6%) rotate(12deg) scale(0.96);
   }
 
   .portfolio__card[data-offset="-2"],
@@ -349,21 +403,38 @@
   }
 }
 
-@media (max-width: 380px) {
-  .portfolio__card {
-    width: min(76vw, 250px);
-    margin-left: calc(min(76vw, 250px) / -2);
-    transform: translateX(calc(var(--offset) * 20%))
-      translateY(calc(abs(var(--offset)) * 2.5%))
-      rotate(calc(var(--offset) * 5deg))
-      scale(calc(1 - abs(var(--offset)) * 0.03));
+@media (max-width: 640px) {
+  .portfolio-modal {
+    padding: 0;
+    align-items: stretch;
+  }
+
+  .portfolio-modal__panel {
+    width: 100%;
+    max-height: 100%;
+    height: 100%;
+    border-radius: 0;
   }
 }
 
-@supports not (width: calc(abs(1))) {
+@media (max-width: 380px) {
+  .portfolio__stage {
+    --card-w: min(76vw, 250px);
+    min-height: clamp(300px, 100vw, 360px);
+    padding-bottom: 1rem;
+  }
+
   .portfolio__card {
-    transform: translateX(calc(var(--offset) * 42%))
-      rotate(calc(var(--offset) * 9deg));
+    width: var(--card-w);
+    margin-left: calc(var(--card-w) / -2);
+  }
+
+  .portfolio__card[data-offset="-1"] {
+    transform: translateX(-20%) translateY(5%) rotate(-10deg) scale(0.96);
+  }
+
+  .portfolio__card[data-offset="1"] {
+    transform: translateX(20%) translateY(5%) rotate(10deg) scale(0.96);
   }
 }
 

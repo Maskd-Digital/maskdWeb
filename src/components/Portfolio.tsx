@@ -115,7 +115,8 @@ const PROJECTS: Project[] = [
 ];
 
 export function Portfolio() {
-  const mid = Math.floor(PROJECTS.length / 2);
+  /* 5-card fan — center index matches Figma (middle of visible arc) */
+  const mid = Math.floor((PROJECTS.length - 1) / 2);
   const [hoveredId, setHoveredId] = useState<string | null>(null);
   const [selected, setSelected] = useState<Project | null>(null);
   const [mounted, setMounted] = useState(false);
@@ -260,7 +261,7 @@ export function Portfolio() {
                 style={
                   {
                     "--offset": offset,
-                    zIndex: isHighlighted ? 40 : 20 - Math.abs(offset),
+                    zIndex: isHighlighted ? 50 : 30 - Math.abs(offset) * 10,
                   } as CSSProperties
                 }
                 onMouseEnter={() => setHoveredId(project.id)}

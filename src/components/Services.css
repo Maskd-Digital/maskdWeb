@@ -8,6 +8,7 @@
 .services__heading {
   /* Section title — Heading 01 tokens + periwinkle tint (pending exact Figma gradient) */
   color: rgba(180, 200, 255, 0.95);
+  margin-bottom: clamp(1.75rem, 3.5vw, 2.5rem);
 }
 
 .services__grid {
@@ -134,6 +135,18 @@
   .service-card:active .service-card__glow,
   .service-card:focus-within .service-card__glow {
     opacity: 1;
+  }
+}
+
+@media (max-width: 719px) {
+  .service-card {
+    aspect-ratio: auto;
+    min-height: 0;
+    height: auto;
+  }
+
+  .service-card__body {
+    text-align: left;
   }
 }
 
