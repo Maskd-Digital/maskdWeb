@@ -1,4 +1,7 @@
+"use client";
+
 import type { CSSProperties } from "react";
+import { useMobileScrollReveal } from "@/hooks/useMobileScrollReveal";
 import "./Tools.css";
 
 type Tool = {
@@ -61,6 +64,13 @@ const TOOLS: Tool[] = [
 ];
 
 export function Tools() {
+  const { scrollEnabled, revealed, setItemRef } = useMobileScrollReveal({
+    mode: "sticky",
+    count: TOOLS.length,
+    minRatio: 0.5,
+    rootMargin: "-18% 0px -18% 0px",
+  });
+
   return (
     <section className="tools" id="tools" aria-labelledby="tools-heading">
       <div className="tools__blueprint" aria-hidden="true" />
@@ -75,13 +85,16 @@ export function Tools() {
         </p>
 
         <ul className="tools__grid" role="list">
-          {TOOLS.map((tool) => (
-            <li key={tool.name} className="tools__cell">
+          {TOOLS.map((tool, index) => (
+            <li key={tool.name} ref={setItemRef(index)} className="tools__cell">
               <div
                 className="tools__tile"
                 style={{ "--tint": tool.tint } as CSSProperties}
                 title={tool.name}
                 data-light-logo={tool.lightLogo ? "true" : undefined}
+                data-scroll-revealed={
+                  scrollEnabled && revealed[index] ? "true" : undefined
+                }
               >
                 <span className="tools__logo-wrap">
                   <img

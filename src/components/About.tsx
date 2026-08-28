@@ -62,6 +62,11 @@ export function About() {
             boundaries of what&apos;s possible. Meet the experts who will be
             bringing your next big idea to life.
           </p>
+          <p className="about__subtext">
+            Mask&apos;d Studio operates as part of Chakravarthy Holdings,
+            bringing the backing and stability of an established group to every
+            project we take on.
+          </p>
         </div>
 
         <div className="about__carousel">

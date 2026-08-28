@@ -1,6 +1,7 @@
 "use client";
 
-import { useState, type CSSProperties } from "react";
+import { type CSSProperties } from "react";
+import { useMobileScrollReveal } from "@/hooks/useMobileScrollReveal";
 import "./Process.css";
 
 const STEPS = [
@@ -27,7 +28,15 @@ const STEPS = [
 ] as const;
 
 export function Process() {
-  const [active, setActive] = useState(0);
+  const { scrollEnabled, activeIndex, setActiveIndex, setItemRef } =
+    useMobileScrollReveal({
+      mode: "progress",
+      count: STEPS.length,
+      minRatio: 0.45,
+    });
+
+  const active = activeIndex;
+  const setActive = setActiveIndex;
 
   return (
     <section className="process" id="process" aria-labelledby="process-heading">
@@ -69,20 +78,31 @@ export function Process() {
             const state =
               index < active ? "done" : index === active ? "active" : "next";
 
+            const StepTag = scrollEnabled ? "div" : "button";
+
             return (
-              <li key={step.id} className="process__step" data-state={state}>
-                <button
-                  type="button"
+              <li
+                key={step.id}
+                ref={setItemRef(index)}
+                className="process__step"
+                data-state={state}
+              >
+                <StepTag
+                  {...(!scrollEnabled
+                    ? {
+                        type: "button" as const,
+                        onClick: () => setActive(index),
+                        onMouseEnter: () => setActive(index),
+                        onFocus: () => setActive(index),
+                      }
+                    : {})}
                   className="process__step-btn"
                   aria-current={index === active ? "step" : undefined}
-                  onClick={() => setActive(index)}
-                  onMouseEnter={() => setActive(index)}
-                  onFocus={() => setActive(index)}
                 >
                   <span className="process__badge">Phase {step.id}</span>
                   <span className="process__step-title">{step.title}</span>
                   <span className="process__step-body">{step.body}</span>
-                </button>
+                </StepTag>
               </li>
             );
           })}

@@ -1,3 +1,6 @@
+"use client";
+
+import { useMobileScrollReveal } from "@/hooks/useMobileScrollReveal";
 import "./Services.css";
 
 const SERVICES = [
@@ -28,6 +31,12 @@ const SERVICES = [
 ] as const;
 
 export function Services() {
+  const { scrollEnabled, revealed, setItemRef } = useMobileScrollReveal({
+    mode: "sticky",
+    count: SERVICES.length,
+    minRatio: 0.5,
+  });
+
   return (
     <section
       className="services"
@@ -39,8 +48,15 @@ export function Services() {
           Capabilities &amp; Craft
         </h2>
         <div className="services__grid">
-          {SERVICES.map((service) => (
-            <article key={service.id} className="service-card">
+          {SERVICES.map((service, index) => (
+            <article
+              key={service.id}
+              ref={setItemRef(index)}
+              className="service-card"
+              data-scroll-revealed={
+                scrollEnabled && revealed[index] ? "true" : undefined
+              }
+            >
               {/* Rectangle 28 — active glow; bleeds past rounded corner */}
               <span className="service-card__glow" aria-hidden="true" />
 

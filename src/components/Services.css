@@ -131,10 +131,27 @@
   hyphens: auto;
 }
 
-@media (hover: none) {
+@media (max-width: 767px) {
+  .service-card:hover:not([data-scroll-revealed="true"]) .service-card__glow,
   .service-card:active .service-card__glow,
   .service-card:focus-within .service-card__glow {
+    opacity: 0;
+  }
+
+  .service-card:hover:not([data-scroll-revealed="true"]) .service-card__title {
+    color: #a0b0ff;
+  }
+
+  .service-card[data-scroll-revealed="true"] {
+    z-index: 2;
+  }
+
+  .service-card[data-scroll-revealed="true"] .service-card__glow {
     opacity: 1;
+  }
+
+  .service-card[data-scroll-revealed="true"] .service-card__title {
+    color: var(--color-white);
   }
 }
 

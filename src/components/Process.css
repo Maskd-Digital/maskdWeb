@@ -142,6 +142,12 @@
   background: rgba(1, 8, 184, 0.12);
 }
 
+@media (max-width: 767px) {
+  .process__step[data-state="active"] .process__step-btn {
+    background: rgba(1, 8, 184, 0.12);
+  }
+}
+
 .process__step-btn:focus-visible {
   outline: 1px solid rgba(160, 176, 255, 0.5);
   outline-offset: 2px;

@@ -284,7 +284,8 @@ export function Portfolio() {
           Masterpieces Crafted By Us
         </h2>
         <p className="portfolio__hint portfolio__hint--desktop">
-          Hover to highlight · Click for details
+          Use arrows to browse · Hover to highlight · Click the center card for
+          details
         </p>
         <p className="portfolio__hint portfolio__hint--mobile">
           Swipe or use arrows · Tap the center card for details
@@ -298,18 +299,17 @@ export function Portfolio() {
             onTouchEnd={onStageTouchEnd}
           >
             {PROJECTS.map((project, index) => {
-              const offset = isMobile
-                ? wrapOffset(index, active, PROJECTS.length)
-                : index - mid;
+              const offset = wrapOffset(index, active, PROJECTS.length);
               const isHighlighted = hoveredId === project.id;
               const isCenter = offset === 0;
+              const isVisible = Math.abs(offset) <= 2;
 
               return (
                 <article
                   key={project.id}
                   className="portfolio__card"
                   role="listitem"
-                  tabIndex={Math.abs(offset) <= 1 ? 0 : -1}
+                  tabIndex={isVisible ? 0 : -1}
                   data-offset={offset}
                   data-highlighted={isHighlighted || (isMobile && isCenter) ? "true" : "false"}
                   style={
@@ -323,7 +323,7 @@ export function Portfolio() {
                   onFocus={() => setHoveredId(project.id)}
                   onBlur={() => setHoveredId(null)}
                   onClick={() => {
-                    if (isMobile && !isCenter) {
+                    if (!isCenter) {
                       setActive(index);
                       return;
                     }
@@ -332,7 +332,7 @@ export function Portfolio() {
                   onKeyDown={(e) => {
                     if (e.key === "Enter" || e.key === " ") {
                       e.preventDefault();
-                      if (isMobile && !isCenter) {
+                      if (!isCenter) {
                         setActive(index);
                         return;
                       }
@@ -340,7 +340,7 @@ export function Portfolio() {
                     }
                   }}
                   aria-label={`${project.name}. Open project details`}
-                  aria-hidden={Math.abs(offset) > 1}
+                  aria-hidden={!isVisible}
                 >
                   <img
                     className="portfolio__card-media"
@@ -360,8 +360,6 @@ export function Portfolio() {
               type="button"
               className="portfolio__arrow"
               aria-label="Previous project"
-              aria-hidden={!isMobile}
-              tabIndex={isMobile ? 0 : -1}
               onClick={prev}
             >
               ‹
@@ -390,8 +388,6 @@ export function Portfolio() {
               type="button"
               className="portfolio__arrow"
               aria-label="Next project"
-              aria-hidden={!isMobile}
-              tabIndex={isMobile ? 0 : -1}
               onClick={next}
             >
               ›

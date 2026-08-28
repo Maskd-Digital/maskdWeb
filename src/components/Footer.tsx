@@ -181,7 +181,10 @@ export function Footer() {
           </div>
         </div>
 
-        <p className="footer__copy">All Rights Reserved.</p>
+        <p className="footer__copy">
+          © 2026 Mask&apos;d Studio, a Chakravarthy Holdings company. All
+          Rights Reserved.
+        </p>
       </div>
     </footer>
   );

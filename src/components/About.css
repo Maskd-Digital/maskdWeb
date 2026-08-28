@@ -28,6 +28,13 @@
   text-wrap: pretty;
 }
 
+.about__subtext {
+  margin-top: 0.35rem;
+  font-size: clamp(0.8rem, 1.8vw, 0.9rem);
+  line-height: 1.55;
+  color: rgba(190, 200, 220, 0.55);
+}
+
 .about__carousel {
   position: relative;
   width: 100%;
