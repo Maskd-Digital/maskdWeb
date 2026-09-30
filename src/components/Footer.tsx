@@ -90,15 +90,15 @@ export function Footer() {
               <div className="footer__links">
                 <p className="footer__links-label">Quick Links</p>
                 <nav aria-label="Footer quick links">
-                  <a href="#about">About Us</a>
+                  <a href="/#about">About Us</a>
                   <span className="footer__links-sep" aria-hidden="true">
                     |
                   </span>
-                  <a href="#capabilities">Our Services</a>
+                  <a href="/#capabilities">Our Services</a>
                   <span className="footer__links-sep" aria-hidden="true">
                     |
                   </span>
-                  <a href="#work">Work</a>
+                  <a href="/#work">Work</a>
                 </nav>
               </div>
             </div>

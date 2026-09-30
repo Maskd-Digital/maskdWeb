@@ -1,17 +1,21 @@
 "use client";
 
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useEffect, useId, useState } from "react";
 import "./Header.css";
 
 const NAV = [
-  { label: "Our Origin", href: "#about" },
-  { label: "Our Capabilities", href: "#capabilities" },
-  { label: "Our Masterpieces", href: "#work" },
+  { label: "Our Origin", href: "/#about" },
+  { label: "Our Capabilities", href: "/#capabilities" },
+  { label: "Our Masterpieces", href: "/#work" },
+  { label: "Privacy Policy", href: "/privacy-policy" },
 ] as const;
 
 export function Header() {
   const [open, setOpen] = useState(false);
   const menuId = useId();
+  const pathname = usePathname();
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "";
@@ -36,9 +40,9 @@ export function Header() {
 
   return (
     <header className={`header ${open ? "header--open" : ""}`}>
-      <a className="header__logo" href="#top" aria-label="Mask'd home" onClick={closeMenu}>
+      <Link className="header__logo" href="/#top" aria-label="Mask'd home" onClick={closeMenu}>
         <img src="/assets/logo-maskd.png" alt="Mask'd" width={72} height={72} />
-      </a>
+      </Link>
 
       <button
         type="button"
@@ -62,9 +66,13 @@ export function Header() {
         <ul>
           {NAV.map((item) => (
             <li key={item.href}>
-              <a href={item.href} onClick={closeMenu}>
+              <Link
+                href={item.href}
+                onClick={closeMenu}
+                aria-current={pathname === item.href ? "page" : undefined}
+              >
                 {item.label}
-              </a>
+              </Link>
             </li>
           ))}
         </ul>

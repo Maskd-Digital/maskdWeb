@@ -86,7 +86,8 @@
 }
 
 .header__nav a:hover,
-.header__nav a:focus-visible {
+.header__nav a:focus-visible,
+.header__nav a[aria-current="page"] {
   color: var(--color-white);
 }
 
